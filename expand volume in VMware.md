@@ -1,6 +1,6 @@
-SuSE装iscsi-target,IP:192.168.244.134 ­
+##SuSE装iscsi-target,IP:192.168.244.134 ­
 
-RHEL装iscsi-initiator,IP:192.168.244.136 ­
+##RHEL装iscsi-initiator,IP:192.168.244.136 ­
 
 SuSE中添加第二块2G的硬盘，名称为hdb,分一个大小为500M的区hdb1,挂载ext3，剩下的空间不动。 ­
 
