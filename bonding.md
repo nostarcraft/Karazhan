@@ -12,10 +12,10 @@ bonding过程如下：­
 
 修改/etc/sysconfig/network-scripts/下的eth0和eth1­
 
+```
+vi ifcfg-eth0­
 
-`vi ifcfg-eth0`­
-
->DEVICE=eth0­
+DEVICE=eth0­
 
 BOOTPROTO=none­
 
@@ -38,7 +38,7 @@ PEERDNS=no­
 MASTER=bond0­
 
 SLAVE=yes­
-
+```
 
 vi ifcfg-eth1­
 
