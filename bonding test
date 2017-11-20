@@ -12,7 +12,7 @@ bonding过程如下：­
 
 修改/etc/sysconfig/network-scripts/下的eth0和eth1­
 
-
+·
 vi ifcfg-eth0­
 
 DEVICE=eth0­
@@ -65,10 +65,10 @@ PEERDNS=no­
 MASTER=bond0­
 
 SLAVE=yes­
-
+·
 
 添加bond0­
-
+·
 vi ifcfg-bond0­
 
 DEVICE=bond0­
@@ -90,14 +90,14 @@ USERCTL=no­
 IPV6INIT=no­
 
 #FREEDNS=yes­
-
+·
 
 在/etc/modprobe.conf里加入两行­
-
+·
 alias bond0 bonding­
 
 options bond0 miimon=100 mode=0­
-
+·
 
 #其中miimon为2个网口互相检测的时间，mode=0为round robin，如果改成1那就是active-backup­
 
@@ -105,9 +105,9 @@ options bond0 miimon=100 mode=0­
 
 
 修改/etc/rc.d/rc.local,加入一行­
-
+·
 /sbin/ifenslave bond0 eth0 eth1­
-
+·
 
 到此，bonding做完，可以用service network status和cat /proc/net/bonding/bond0来查看其状态­
 
