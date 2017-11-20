@@ -15,7 +15,7 @@ bonding过程如下：­
 
 `vi ifcfg-eth0`­
 
-DEVICE=eth0­
+>DEVICE=eth0­
 
 BOOTPROTO=none­
 
