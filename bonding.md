@@ -1,8 +1,8 @@
 环境：­
 
-## VMware workstation 5.5.2­
+#### VMware workstation 5.5.2­
 
-## Guest OS:RHEL5.1­
+#### Guest OS:RHEL5.1­
 
 
 所有的网卡都走bridge,其中1台RHEL只开eth0,另1台开eth0,eth1,并做bonding­
