@@ -1,6 +1,6 @@
 环境：­
 
-VMware workstation 5.5.2­
+`VMware workstation 5.5.2`­
 
 Guest OS:RHEL5.1­
 
