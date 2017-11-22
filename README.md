@@ -6,3 +6,6 @@
 *test again*
 
 >wonderful
+
+
+split function test
