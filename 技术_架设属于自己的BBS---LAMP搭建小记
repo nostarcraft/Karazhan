@@ -14,9 +14,9 @@ YasT里Apache里选Enable,然后firefox里试http://127.0.0.1­;
 出现It works为正常，注：Apache默认只认.html后缀，不认htm后缀­
 
 然后把/srv/www/htdocs/index.html,的内容改成­
-
+```
 <?php phpinfo();?>­
-
+```
 并保存为index.php­
 
 然后firefox里继续试http://127.0.0.1­;
@@ -25,11 +25,11 @@ YasT里Apache里选Enable,然后firefox里试http://127.0.0.1­;
 
 
 YasT里的System Service(runlevel)里把mysql开启­
-
+```
 #mysql­
 
 mysql>­
-
+```
 (安装成功)­
 
 
