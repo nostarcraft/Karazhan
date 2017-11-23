@@ -14,4 +14,4 @@ SuSE中添加第二块2G的硬盘，名称为hdb,分一个大小为500M的区hdb
 
 注:实际发现`blockdev --rereadpt /dev/sda`（重读partition table）这个命令不用也可以，只要注意对卷进行操作时把initiator断开，把iscsi-target服务stop就可以 ­
 
-2008.5.25
+-2008.5.25
