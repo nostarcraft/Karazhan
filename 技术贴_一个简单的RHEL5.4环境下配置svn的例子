@@ -1,0 +1,84 @@
+1.RHEL完全安装，补装mod_dav_svn包（若未装此包则在/etc/httpd/modules下无mod_dav_svn.so和mod_authz_svn.so）
+ 
+2.mkdir /data/svnroot 建立项目库父目录
+ 
+3.svnadmin create /data/svnroot/test1 初始化一个svn项目库test1
+ 
+4.htpasswd -c /data/svnroot/.htpasswd testuser1 创建一个用户testuser1,密码文件为.htpasswd存放在/data/svnroot下
+ 
+5.htpasswd /data/svnroot/.htpasswd testuser2 创建第二个用户testuser2
+ 
+6.chown apache:apache -R /data/svnroot/ 修改宿主为apache
+ 
+7.chmod 755 -R /data/svnroot/ 修改权限
+ 
+8. nano /data/svnroot/svnaccess1 创建访问控制文件，内容如下：
+ 
+[groups]
+ 
+[test1:/]
+testuser1=r
+testuser2=rw
+*=rw
+ 
+9.修改/etc/httpd/conf/httpd.conf，增加如下几行
+ 
+<Location /svnroot>
+DAV svn    告诉Apache是哪个模块响应哪个URL的请求，在这里是Subversion模块
+SVNParentPath /data/svnroot    告诉Subversion需要查看的版本库在/data/svnroot之下。如果不希望为每个单独的项目都进行单
+独的设置，可以把所有项目都存放在统一的资源库目录，使用SVNParentPath指令来指定存放所有项目的路径。否则使用SVNPath
+AuthzSVNAccessFile /data/svnroot/svnaccess1    设定访问版本库权限的文件
+AuthType Basic
+AuthName "SVN Repositorys"    认证名称，将在浏览器界面弹出一个对话框，标题为SVN Repositorys
+AuthUserFile /data/svnroot/.htpasswd    指定使用的认证密码文件，即访问版本库用户的文件，用apache的htpasswd命令生成
+Require valid-user    要求验证用户，即不能匿名访问。如果没有该语句，则只能第一个用户可以访问新建库
+</Location>
+ 
+ServerName fileserver2:80
+ 
+注：RHEL5.4默认已经加载了这两条了，不用学网上的再手工加载
+LoadModule dav_svn_module modules/mod_dav_svn.so   
+LoadModule authz_svn_module modules/mod_authz_svn.so
+ 
+10.启动svn作为单独的一个进程，svnserve -d -r /data/svnroot/test1，结束svn则用命令killall svnserve命令。
+ 
+11.启动apache服务，service httpd start
+http://fileserver2/svnroot/test1/，输入用户名密码，成功。
+ 
+注：troubleshooting可以从/var/log/httpd/error_log入手。
+ 
+=======华丽的分割线=======
+ 
+补充：多个svn工程项目从windows平台迁移到linux平台下的方法：
+
+1.拷贝windows下所有的svn档案目录至linux下相应的位置，如/data/svnroot
+ 
+2.修改访问控制文件svnaccess1,把所有的项目依次加入进去，如：
+ 
+[groups]
+ 
+[test1:/]
+testuser1=r
+testuser2=rw
+*=rw
+ 
+[101FM:/]
+testuser1=r
+testuser2=rw
+xzy=rw
+ 
+[51dab:/]
+testuser1=r
+testuser2=rw
+xzy=rw
+...
+ 
+3.补充需要登录svn的用户，如htpasswd /data/svnroot/.htpasswd xzy
+ 
+4.启动时一定要用svnserve -d -r /data/svnroot，是针对所有svn项目的
+ 
+5.在浏览器里访问相应的路径，如：想要访问101FM，就输入http://fileserver2/svnroot/101FM即可。
+ 
+注：svnadmin dump未试成功，所以svn项目的访问权限需在svnaccess1中针对不同用户重新设置一下，因为在windows中，这些权限和用户控制是分散在各个项目的conf目录下authz,passwd,svnserve.conf中的，并且用户密码是明文存放的。而在linux中则集中管理了，如所有项目的控制管理放在了svnaccess1中，所有用户放在了.htpasswd中。
+
+-2012.9
